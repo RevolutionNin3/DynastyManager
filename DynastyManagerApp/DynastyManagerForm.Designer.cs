@@ -29,6 +29,7 @@ namespace DynastyManagerApp
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DynastyManagerForm));
             this.label1 = new System.Windows.Forms.Label();
             this.draftOrderTextBox = new System.Windows.Forms.TextBox();
             this.lottoGenerateButton = new System.Windows.Forms.Button();
@@ -118,7 +119,7 @@ namespace DynastyManagerApp
             this.tabPage1.Location = new System.Drawing.Point(4, 24);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(521, 624);
+            this.tabPage1.Size = new System.Drawing.Size(521, 402);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Draft Lotto Generator";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -281,6 +282,7 @@ namespace DynastyManagerApp
             this.Controls.Add(this.label2);
             this.Controls.Add(this.tabControl1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "DynastyManagerForm";
             this.Text = "DynastyManager";
             this.tabControl1.ResumeLayout(false);
