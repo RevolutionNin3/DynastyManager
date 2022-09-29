@@ -31,6 +31,29 @@ namespace DynastyManagerApp.Helpers
                 weekCount++;
             }
 
+            foreach(var week in weeks)
+            {
+                foreach(var matchup in week.Matchups)
+                {
+                    if(matchup.Team1 == "error")
+                    {
+                        var errorWeeks = new List<Week>();
+                        errorWeeks.Add(new Week
+                        {
+                            Matchups = new List<Matchup>()
+                            {
+                                new Matchup
+                                {
+                                    Team1 = "Failed to generate valid schedule. Please try again."
+                                }
+                            }
+                        });
+
+                        return errorWeeks;
+                    }
+                }    
+            }
+
             return weeks;
         }
 
@@ -196,6 +219,11 @@ namespace DynastyManagerApp.Helpers
                 {
                     return new List<Matchup>() { allAvailableMatchups.First(m => m.Team1 == team || m.Team2 == team) };
                 }
+            }
+
+            if(allAvailableMatchups.Count == 0)
+            {
+                allAvailableMatchups.Add(new Matchup { Team1 = "error" });
             }
 
             return allAvailableMatchups;
