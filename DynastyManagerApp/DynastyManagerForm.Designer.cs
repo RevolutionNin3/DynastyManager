@@ -55,10 +55,20 @@ namespace DynastyManagerApp
             this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.transactionTeamDropdown = new System.Windows.Forms.ComboBox();
+            this.label4 = new System.Windows.Forms.Label();
+            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.PlayerColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.TransactionColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.getTransactionsButton = new System.Windows.Forms.Button();
+            this.refreshPlayersButton = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.scheduleDataGrid)).BeginInit();
+            this.tabPage3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
             // label1
@@ -104,6 +114,7 @@ namespace DynastyManagerApp
             // 
             this.tabControl1.Controls.Add(this.tabPage1);
             this.tabControl1.Controls.Add(this.tabPage2);
+            this.tabControl1.Controls.Add(this.tabPage3);
             this.tabControl1.Location = new System.Drawing.Point(4, 84);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
@@ -272,6 +283,77 @@ namespace DynastyManagerApp
             this.dataGridViewTextBoxColumn3.HeaderText = "Week";
             this.dataGridViewTextBoxColumn3.Name = "dataGridViewTextBoxColumn3";
             // 
+            // tabPage3
+            // 
+            this.tabPage3.Controls.Add(this.refreshPlayersButton);
+            this.tabPage3.Controls.Add(this.getTransactionsButton);
+            this.tabPage3.Controls.Add(this.dataGridView1);
+            this.tabPage3.Controls.Add(this.label4);
+            this.tabPage3.Controls.Add(this.transactionTeamDropdown);
+            this.tabPage3.Location = new System.Drawing.Point(4, 24);
+            this.tabPage3.Name = "tabPage3";
+            this.tabPage3.Size = new System.Drawing.Size(521, 402);
+            this.tabPage3.TabIndex = 2;
+            this.tabPage3.Text = "Transaction Lookup";
+            this.tabPage3.UseVisualStyleBackColor = true;
+            // 
+            // transactionTeamDropdown
+            // 
+            this.transactionTeamDropdown.FormattingEnabled = true;
+            this.transactionTeamDropdown.Location = new System.Drawing.Point(4, 27);
+            this.transactionTeamDropdown.Name = "transactionTeamDropdown";
+            this.transactionTeamDropdown.Size = new System.Drawing.Size(514, 23);
+            this.transactionTeamDropdown.TabIndex = 0;
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(4, 9);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(35, 15);
+            this.label4.TabIndex = 1;
+            this.label4.Text = "Team";
+            // 
+            // dataGridView1
+            // 
+            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.PlayerColumn,
+            this.TransactionColumn});
+            this.dataGridView1.Location = new System.Drawing.Point(4, 56);
+            this.dataGridView1.Name = "dataGridView1";
+            this.dataGridView1.RowTemplate.Height = 25;
+            this.dataGridView1.Size = new System.Drawing.Size(514, 313);
+            this.dataGridView1.TabIndex = 2;
+            // 
+            // PlayerColumn
+            // 
+            this.PlayerColumn.HeaderText = "Player";
+            this.PlayerColumn.Name = "PlayerColumn";
+            // 
+            // TransactionColumn
+            // 
+            this.TransactionColumn.HeaderText = "Transaction";
+            this.TransactionColumn.Name = "TransactionColumn";
+            // 
+            // getTransactionsButton
+            // 
+            this.getTransactionsButton.Location = new System.Drawing.Point(386, 375);
+            this.getTransactionsButton.Name = "getTransactionsButton";
+            this.getTransactionsButton.Size = new System.Drawing.Size(132, 23);
+            this.getTransactionsButton.TabIndex = 3;
+            this.getTransactionsButton.Text = "Get Transactions";
+            this.getTransactionsButton.UseVisualStyleBackColor = true;
+            // 
+            // refreshPlayersButton
+            // 
+            this.refreshPlayersButton.Location = new System.Drawing.Point(4, 375);
+            this.refreshPlayersButton.Name = "refreshPlayersButton";
+            this.refreshPlayersButton.Size = new System.Drawing.Size(111, 23);
+            this.refreshPlayersButton.TabIndex = 4;
+            this.refreshPlayersButton.Text = "Refresh Players";
+            this.refreshPlayersButton.UseVisualStyleBackColor = true;
+            // 
             // DynastyManagerForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -291,6 +373,9 @@ namespace DynastyManagerApp
             this.tabPage2.ResumeLayout(false);
             this.tabPage2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.scheduleDataGrid)).EndInit();
+            this.tabPage3.ResumeLayout(false);
+            this.tabPage3.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -323,6 +408,14 @@ namespace DynastyManagerApp
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn5;
         private System.Windows.Forms.DataGridViewTextBoxColumn team1;
         private System.Windows.Forms.DataGridViewTextBoxColumn team2;
+        private System.Windows.Forms.TabPage tabPage3;
+        private System.Windows.Forms.Button refreshPlayersButton;
+        private System.Windows.Forms.Button getTransactionsButton;
+        private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn PlayerColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn TransactionColumn;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.ComboBox transactionTeamDropdown;
     }
 }
 

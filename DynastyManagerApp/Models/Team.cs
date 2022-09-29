@@ -15,5 +15,7 @@
         public int Standing { get; set; }
 
         public int ConferenceStanding { get; set; }
+
+        public string ConferenceId { get; set; }
     }
 }

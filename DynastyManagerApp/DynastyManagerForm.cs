@@ -12,8 +12,17 @@ namespace DynastyManagerApp
         public DynastyManagerForm()
         {
             InitializeComponent();
+            InitializeTransactionTeamDropdown();
             leagueDropDown.DropDownStyle = ComboBoxStyle.DropDownList;
             leagueDropDown.SelectedIndex = 0;
+        }
+
+        private async void InitializeTransactionTeamDropdown()
+        {
+            var leagueId = Convert.ToInt64(leagueDropDown.SelectedItem);
+            //var league = await SleeperHelper.GetSleeperDataAsync(leagueId, true);
+
+
         }
 
         private async void lottoGenerateButton_Click(object sender, EventArgs e)
@@ -90,6 +99,16 @@ namespace DynastyManagerApp
                     fs.Write(Encoding.UTF8.GetBytes(scheduleText));
                 }
             }
+        }
+
+        private async void transactionTeamDropdown_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            leagueDataLabel.Text = "Select a team and click Get Transactions button...";
+
+            var leagueId = Convert.ToInt64(leagueDropDown.SelectedItem);
+            var league = await SleeperHelper.GetSleeperDataAsync(leagueId);
+
+            leagueDataLabel.Text = $"{league.Season} - {league.Name} : {league.Status}";
         }
     }
 }

@@ -17,7 +17,7 @@ namespace DynastyManagerApp.Helpers
         const string _playersJsonPath = @"C:\Dev\Dynasty\Players.json";
         static readonly HttpClient client = new HttpClient();
 
-        public static async Task<League> GetSleeperDataAsync(long leagueId)
+        public static async Task<League> GetSleeperDataAsync(long leagueId, bool getTransactions = false)
         {
             var league = new League();
 
@@ -76,6 +76,16 @@ namespace DynastyManagerApp.Helpers
                 team.Fpts = CalculateFpts(sleeperRoster.settings.fpts, sleeperRoster.settings.fpts_decimal);
 
                 conference.Teams.Add(team);
+            }
+
+            if(getTransactions)
+            {
+                var transactionResponse = await client.GetAsync($"{_sURL}/v1/league/{leagueId}/transactions/1");
+                transactionResponse.EnsureSuccessStatusCode();
+                var transactionResponseRaw = await transactionResponse.Content.ReadAsStringAsync();
+                var transactions = JsonConvert.DeserializeObject<List<SleeperTransaction>>(transactionResponseRaw);
+
+
             }
 
             return league;
