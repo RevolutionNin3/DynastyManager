@@ -13,5 +13,9 @@
         public string fpts { get; set; }
 
         public string fpts_decimal { get; set; }
+
+        public string ppts { get; set; }
+
+        public string ppts_decimal { get; set; }
     }
 }

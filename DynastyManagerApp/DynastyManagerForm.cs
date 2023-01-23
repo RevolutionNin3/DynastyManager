@@ -21,7 +21,7 @@ namespace DynastyManagerApp
             var leagueId = Convert.ToInt64(leagueDropDown.SelectedItem);
             var teams = await DraftLottoHelper.GenerateDraftOrderAsync(leagueId);
 
-            draftOrderTextBox.Text = draftOrderTextBox.Text + DateTime.Now.ToString();
+            draftOrderTextBox.Text = DateTime.Now.ToString();
             var i = 1;
             foreach (var team in teams)
             {

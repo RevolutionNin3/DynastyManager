@@ -6,6 +6,8 @@
 
         public decimal Fpts { get; set; }
 
+        public decimal MaxPtsFor { get; set; }
+
         public int Wins { get; set; }
 
         public int Losses { get; set; }

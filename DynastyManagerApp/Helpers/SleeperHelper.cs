@@ -73,8 +73,8 @@ namespace DynastyManagerApp.Helpers
                 team.Wins = Convert.ToInt32(sleeperRoster.settings.wins);
                 team.Losses = Convert.ToInt32(sleeperRoster.settings.losses);
                 team.Ties = Convert.ToInt32(sleeperRoster.settings.ties);
-                team.Fpts = CalculateFpts(sleeperRoster.settings.fpts, sleeperRoster.settings.fpts_decimal);
-
+                team.Fpts = CalculateDecimalValue(sleeperRoster.settings.fpts, sleeperRoster.settings.fpts_decimal);
+                team.MaxPtsFor = CalculateDecimalValue(sleeperRoster.settings.ppts, sleeperRoster.settings.ppts_decimal);
                 conference.Teams.Add(team);
             }
 
@@ -123,10 +123,10 @@ namespace DynastyManagerApp.Helpers
             return matchups;
         }
 
-        private static decimal CalculateFpts(string fptsString, string fpts_decimalString)
+        private static decimal CalculateDecimalValue(string ptsString, string ptsDecimal)
         {
-            var fpts = Convert.ToDecimal(fptsString);
-            var fptsDecimal = Convert.ToDecimal(fpts_decimalString);
+            var fpts = Convert.ToDecimal(ptsString);
+            var fptsDecimal = Convert.ToDecimal(ptsDecimal);
             fptsDecimal = fptsDecimal * .01M;
 
             return fpts + fptsDecimal;
