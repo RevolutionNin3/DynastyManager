@@ -57,14 +57,14 @@ namespace DynastyManagerApp.Helpers
             var teams = new List<Team>();
             var draftPercentages = new List<int>
             {
-                23,
-                18,
-                14,
-                12,
-                10,
+                30,
+                22,
+                16,
+                13,
                 9,
-                8,
-                6
+                5,
+                3,
+                2
             };
             var draftArray = new List<string>();
             var draftOrder = new List<string>();
@@ -72,8 +72,11 @@ namespace DynastyManagerApp.Helpers
             var diamondConferenceSorted = new List<Team>();
 
             // Order all teams by wins and fpts
-            prestigiousConferenceSorted = league.Conferences[0].Teams.OrderBy(t => t.Wins).ThenBy(t => t.Ties).ThenBy(t => t.Fpts).ToList();
-            diamondConferenceSorted = league.Conferences[1].Teams.OrderBy(t => t.Wins).ThenBy(t => t.Ties).ThenBy(t => t.Fpts).ToList();
+            //prestigiousConferenceSorted = league.Conferences[0].Teams.OrderBy(t => t.Wins).ThenBy(t => t.Ties).ThenBy(t => t.Fpts).ToList();
+            //diamondConferenceSorted = league.Conferences[1].Teams.OrderBy(t => t.Wins).ThenBy(t => t.Ties).ThenBy(t => t.Fpts).ToList();
+
+            prestigiousConferenceSorted = league.Conferences[0].Teams.OrderBy(t => t.MaxPtsFor).ToList();
+            diamondConferenceSorted = league.Conferences[1].Teams.OrderBy(t => t.MaxPtsFor).ToList();
 
             // Remove teams that made the playoffs
             prestigiousConferenceSorted.RemoveRange(4, 4);
@@ -83,7 +86,7 @@ namespace DynastyManagerApp.Helpers
             teams.AddRange(diamondConferenceSorted);
 
             // Re-sort remaining teams by wins and fpts
-            teams = teams.OrderBy(t => t.Wins).ThenBy(t => t.Ties).ThenBy(t => t.Fpts).ToList();
+            teams = teams.OrderBy(t => t.MaxPtsFor).ToList();
 
             if (teams.Count == draftPercentages.Count)
             {
