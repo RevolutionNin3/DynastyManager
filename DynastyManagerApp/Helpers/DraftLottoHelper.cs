@@ -22,6 +22,29 @@ namespace DynastyManagerApp.Helpers
             return draftOrder;
         }
 
+        //public static async Task<List<string>> GenerateDraftOrderAsync(long leagueId)
+        //{
+        //    var league = await SleeperHelper.GetSleeperDataAsync(leagueId);
+
+        //    var now = DateTime.Now.ToString();
+        //    now = now.Replace('/', '-');
+        //    now = now.Replace(':', '_');
+        //    var filePath = @$"C:\Dev\Dynasty\Draft Lotto\DynastyScheduleGenerator Export {now}.csv";
+
+        //    var draftOrder = new List<string>();
+        //    var csv = new StringBuilder();
+
+        //    int i = 0;
+        //    while (i < 10000)
+        //    {
+        //        draftOrder = GenerateDraftOrder(league);
+        //        ExportToCsvSimple(filePath, csv, draftOrder);
+        //        i++;
+        //    }
+
+        //    return draftOrder;
+        //}
+
         private static int GenerateRandomNumber(int maxCount, int? exclude = null)
         {
             var randomNumber = random.Next(maxCount);
@@ -46,6 +69,18 @@ namespace DynastyManagerApp.Helpers
             foreach (var s in strings)
             {
                 csv.AppendLine(i.ToString() + ". " + s);
+                i++;
+            }
+
+            File.WriteAllText(filePath, csv.ToString());
+        }
+
+        private static void ExportToCsvSimple(string filePath, StringBuilder csv, List<string> strings)
+        {
+            var i = 1;
+            foreach (var s in strings)
+            {
+                csv.AppendLine(i.ToString() + "|" + s);
                 i++;
             }
 
