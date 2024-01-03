@@ -1,9 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using DynastyManagerApp.SleeperModels;
+using System.Collections.Generic;
 
 namespace DynastyManagerApp.Models
 {
     public class League
-    { 
+    {
         public League()
         {
             Conferences = new List<Conference>();
@@ -14,10 +15,12 @@ namespace DynastyManagerApp.Models
 
         public List<Conference> Conferences { get; set; }
 
-        public Schedule Schedule {get; set;}
+        public Schedule Schedule { get; set; }
 
         public string Season { get; set; }
 
         public string Status { get; set; }
+
+        public List<SleeperPlayoffMatchup> WinnersBracket { get; set; }
     }
 }
