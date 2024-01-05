@@ -106,21 +106,21 @@ namespace DynastyManagerApp.Helpers
             var prestigiousConferenceSorted = new List<Team>();
             var diamondConferenceSorted = new List<Team>();
 
-            // Order all teams by wins and fpts
-            //prestigiousConferenceSorted = league.Conferences[0].Teams.OrderBy(t => t.Wins).ThenBy(t => t.Ties).ThenBy(t => t.Fpts).ToList();
-            //diamondConferenceSorted = league.Conferences[1].Teams.OrderBy(t => t.Wins).ThenBy(t => t.Ties).ThenBy(t => t.Fpts).ToList();
-
             prestigiousConferenceSorted = league.Conferences[0].Teams.OrderBy(t => t.MaxPtsFor).ToList();
             diamondConferenceSorted = league.Conferences[1].Teams.OrderBy(t => t.MaxPtsFor).ToList();
 
+            // Get list of all teams that made the playoffs
+            var playoffRosterIds = league.WinnersBracket.Where(t => t.r == 1).Select(t => t.t1).ToList();
+            playoffRosterIds.AddRange(league.WinnersBracket.Where(t => t.r == 1).Select(t => t.t2));
+
             // Remove teams that made the playoffs
-            prestigiousConferenceSorted.RemoveRange(4, 4);
-            diamondConferenceSorted.RemoveRange(4, 4);
+            prestigiousConferenceSorted.RemoveAll(t => playoffRosterIds.Contains(t.RosterId));
+            diamondConferenceSorted.RemoveAll(t => playoffRosterIds.Contains(t.RosterId));
 
             teams.AddRange(prestigiousConferenceSorted);
             teams.AddRange(diamondConferenceSorted);
 
-            // Re-sort remaining teams by wins and fpts
+            // Re-sort remaining teams by MPF
             teams = teams.OrderBy(t => t.MaxPtsFor).ToList();
 
             if (teams.Count == draftPercentages.Count)

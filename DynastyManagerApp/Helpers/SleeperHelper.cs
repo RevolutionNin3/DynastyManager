@@ -54,6 +54,12 @@ namespace DynastyManagerApp.Helpers
             var leagueRosterResponseRaw = await leagueRosterResponse.Content.ReadAsStringAsync();
             var sleeperRosters = JsonConvert.DeserializeObject<List<SleeperRoster>>(leagueRosterResponseRaw);
 
+            var leaguePlayoffBracketResponse = await client.GetAsync($"{_sURL}/v1/league/{leagueId}/winners_bracket");
+            leaguePlayoffBracketResponse.EnsureSuccessStatusCode();
+            var leaguePlayoffBracketResponseRaw = await leaguePlayoffBracketResponse.Content.ReadAsStringAsync();
+            var sleeperPlayoffBracket = JsonConvert.DeserializeObject<List<SleeperPlayoffMatchup>>(leaguePlayoffBracketResponseRaw);
+            league.WinnersBracket = sleeperPlayoffBracket;
+
             foreach (var user in sleeperLeagueUsers)
             {
                 var sleeperRoster = sleeperRosters.FirstOrDefault(sr => sr.owner_id == user.user_id);
@@ -75,6 +81,7 @@ namespace DynastyManagerApp.Helpers
                 team.Ties = Convert.ToInt32(sleeperRoster.settings.ties);
                 team.Fpts = CalculateDecimalValue(sleeperRoster.settings.fpts, sleeperRoster.settings.fpts_decimal);
                 team.MaxPtsFor = CalculateDecimalValue(sleeperRoster.settings.ppts, sleeperRoster.settings.ppts_decimal);
+                team.RosterId = sleeperRoster.roster_id;
                 conference.Teams.Add(team);
             }
 
