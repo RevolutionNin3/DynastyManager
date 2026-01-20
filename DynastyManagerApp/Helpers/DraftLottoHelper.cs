@@ -12,14 +12,14 @@ namespace DynastyManagerApp.Helpers
     {
         static readonly Random random = new Random();
 
-        public static async Task<List<string>> GenerateDraftOrderAsync(long leagueId)
+        public static async Task<DraftDetails> GenerateDraftOrderAsync(long leagueId)
         {
             var league = await SleeperHelper.GetSleeperDataAsync(leagueId);
-            var draftOrder = GenerateDraftOrder(league);
+            var draftDetails = GenerateDraftOrder(league);
 
-            ExportToCsvSimple(draftOrder);
+            ExportToCsvSimple(draftDetails.DraftOrder);
 
-            return draftOrder;
+            return draftDetails;
         }
 
         //public static async Task<List<string>> GenerateDraftOrderAsync(long leagueId)
@@ -87,8 +87,9 @@ namespace DynastyManagerApp.Helpers
             File.WriteAllText(filePath, csv.ToString());
         }
 
-        private static List<string> GenerateDraftOrder(League league)
+        private static DraftDetails GenerateDraftOrder(League league)
         {
+            var draftDetails = new DraftDetails();
             var teams = new List<Team>();
             var draftPercentages = new List<int>
             {
@@ -102,7 +103,6 @@ namespace DynastyManagerApp.Helpers
                 2
             };
             var draftArray = new List<string>();
-            var draftOrder = new List<string>();
             var prestigiousConferenceSorted = new List<Team>();
             var diamondConferenceSorted = new List<Team>();
 
@@ -120,8 +120,29 @@ namespace DynastyManagerApp.Helpers
             teams.AddRange(prestigiousConferenceSorted);
             teams.AddRange(diamondConferenceSorted);
 
-            // Re-sort remaining teams by MPF
+            // Re-sort remaining teams by MPF + AdditionalPoints
             teams = teams.OrderBy(t => t.MaxPtsFor).ToList();
+            draftDetails.MpfOrder = teams.Select(t => t.Name).ToList();
+
+            foreach (var team in teams)
+            {
+                if (draftDetails.Adjustments.ContainsKey(team.Name))
+                {
+                    team.AdditionalPoints = draftDetails.Adjustments[team.Name];
+                }
+
+                if (team.AdditionalPoints > 0)
+                {
+                    team.Name = team.Name + " (" + team.MaxPtsFor + " + " + team.AdditionalPoints + ")";
+                }
+                else
+                {
+                    team.Name = team.Name + " (" + team.MaxPtsFor + ")";
+                }
+            }
+
+            teams = teams.OrderBy(t => t.MaxPtsFor + t.AdditionalPoints).ToList();
+            draftDetails.AdjustedOrder = teams.Select(t => t.Name).ToList();
 
             if (teams.Count == draftPercentages.Count)
             {
@@ -137,42 +158,42 @@ namespace DynastyManagerApp.Helpers
             }
             else
             {
-                return new List<string>();
+                return draftDetails;
             }
 
             for (int i = 0; i < 8; i++)
             {
-                if (i == 2 && draftOrder.Contains(teams[0].Name) == false)
+                if (i == 2 && draftDetails.DraftOrder.Contains(teams[0].Name) == false)
                 {
-                    draftOrder.Add(teams[0].Name);
+                    draftDetails.DraftOrder.Add(teams[0].Name);
                     draftArray.RemoveAll(d => d == teams[0].Name);
                     continue;
                 }
 
-                if (i == 3 && draftOrder.Contains(teams[1].Name) == false)
+                if (i == 3 && draftDetails.DraftOrder.Contains(teams[1].Name) == false)
                 {
-                    draftOrder.Add(teams[1].Name);
+                    draftDetails.DraftOrder.Add(teams[1].Name);
                     draftArray.RemoveAll(d => d == teams[1].Name);
                     continue;
                 }
 
-                if (i == 4 && draftOrder.Contains(teams[2].Name) == false)
+                if (i == 4 && draftDetails.DraftOrder.Contains(teams[2].Name) == false)
                 {
-                    draftOrder.Add(teams[2].Name);
+                    draftDetails.DraftOrder.Add(teams[2].Name);
                     draftArray.RemoveAll(d => d == teams[2].Name);
                     continue;
                 }
 
-                if (i == 5 && draftOrder.Contains(teams[3].Name) == false)
+                if (i == 5 && draftDetails.DraftOrder.Contains(teams[3].Name) == false)
                 {
-                    draftOrder.Add(teams[3].Name);
+                    draftDetails.DraftOrder.Add(teams[3].Name);
                     draftArray.RemoveAll(d => d == teams[3].Name);
                     continue;
                 }
 
-                if (i == 6 && draftOrder.Contains(teams[4].Name) == false)
+                if (i == 6 && draftDetails.DraftOrder.Contains(teams[4].Name) == false)
                 {
-                    draftOrder.Add(teams[4].Name);
+                    draftDetails.DraftOrder.Add(teams[4].Name);
                     draftArray.RemoveAll(d => d == teams[4].Name);
                     continue;
                 }
@@ -180,10 +201,10 @@ namespace DynastyManagerApp.Helpers
                 var random = GenerateRandomNumber(draftArray.Count);
                 var team = draftArray[random];
                 draftArray.RemoveAll(d => d == team);
-                draftOrder.Add(team);
+                draftDetails.DraftOrder.Add(team);
             }
 
-            return draftOrder;
+            return draftDetails;
         }
     }
 }
