@@ -19,5 +19,7 @@
         public int ConferenceStanding { get; set; }
 
         public int RosterId { get; set; }
+
+        public decimal AdditionalPoints { get; set; }
     }
 }
